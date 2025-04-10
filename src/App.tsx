@@ -7,6 +7,9 @@ import './App.css'
 import Hello from './Hello';
 import UserGreeting from './UserGreeting';
 import UserMood from './UserMood';
+import ClickCounter from './ClickCounter';
+
+
 
 function App() {
   return (
@@ -15,7 +18,9 @@ function App() {
       <UserGreeting name="Света" />
       <UserMood mood="happy" />
       <UserMood mood="sad" />
+      <ClickCounter />
     </div>
+    
   );
 }
 
