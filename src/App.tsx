@@ -5,19 +5,25 @@ import viteLogo from '/vite.svg'
 */
 import './App.css'
 import Hello from './Hello';
-
+import UserGreeting from './UserGreeting';
+import UserMood from './UserMood';
 
 function App() {
   return (
     <div>
-      <Hello />
+      <UserGreeting name="Антон" />
+      <UserGreeting name="Света" />
+      <UserMood mood="happy" />
+      <UserMood mood="sad" />
     </div>
   );
 }
 
 export default App;
 
-/*
+
+
+/* Нулевой
 function App() {
   const [count, setCount] = useState(0)
 
@@ -48,4 +54,4 @@ function App() {
 }
 
 export default App
-*/
+****************************************************************************************/
