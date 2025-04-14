@@ -1,62 +1,54 @@
-/*
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-*/
-import './App.css'
-import Hello from './Hello';
-import UserGreeting from './UserGreeting';
+import './App.css';
 import UserMood from './UserMood';
 import ClickCounter from './ClickCounter';
+import React, { useState, useEffect } from "react";
 
+function Greeting(props) {
+  return <h1>Привет, {props.name}!</h1>;
+}
 
+export default function App() {
+  const [username, setUsername] = useState("Павел");
+  const [darkMode, setDarkMode] = useState(false);
+  const [clicks, setClicks] = useState(0);
+  const [guests, setGuests] = useState(["Павел", "Медельин"]);
 
-function App() {
+  function addGuest() {
+    const newName = prompt("Как тебя зовут?")?.trim();
+    if (newName && !guests.includes(newName)) {
+      setGuests([...guests, newName]);
+    }
+  }
+
+  function removeGuest(indexToRemove) {
+    setGuests(guests.filter((_, index) => index !== indexToRemove));
+  }
+
+  useEffect(() => {
+    const storedGuests = localStorage.getItem("guests");
+    if (storedGuests) {
+      setGuests(JSON.parse(storedGuests));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("guests", JSON.stringify(guests));
+  }, [guests]);
+
   return (
-    <div>
-      <UserGreeting name="Антон" />
-      <UserGreeting name="Света" />
+    <div className={darkMode ? "dark" : ""}>
       <UserMood mood="happy" />
       <UserMood mood="sad" />
       <ClickCounter />
+
+      {guests.map((name, index) => (
+        <div key={index}>
+          <Greeting name={name} />
+          <button onClick={() => removeGuest(index)}>Удалить</button>
+        </div>
+      ))}
+
+      <button onClick={addGuest}>Добавить гостя</button>
     </div>
-    
   );
 }
-
-export default App;
-
-
-
-/* Нулевой
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
-****************************************************************************************/
